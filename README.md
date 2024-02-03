@@ -1,5 +1,5 @@
 # Habit Saving Account
-This app is created using React-Native & Typescript.
+This app is created using React-Native & Typescript & NativeWind.
 
 
 ## React Native tutorial
