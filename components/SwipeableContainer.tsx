@@ -1,40 +1,46 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Swipeable } from "react-native-gesture-handler";
-import { AntDesign } from '@expo/vector-icons';
-import { Hoverable } from "./Hoverable";
-import { Button, 
-        Checkbox, 
-        CheckIcon, 
-        Box, 
-        Text, 
-        Badge, 
-        BadgeIcon, 
-        BadgeText } from "@gluestack-ui/themed";
+
+import { AntDesign } from "@expo/vector-icons";
+import {
+  Button,
+  Checkbox,
+  CheckIcon,
+  Box,
+  Text,
+  Badge,
+  BadgeIcon,
+  BadgeText,
+} from "@gluestack-ui/themed";
 import { GlobeIcon } from "@gluestack-ui/themed";
-import { MyCheckbox } from "./MyCheckbox";
+
+import useHabits from "@/hooks/useHabits";
+
 import DifficuityBadge from "./DifficultyBadge";
+import { Hoverable } from "./Hoverable";
+import { MyCheckbox } from "./MyCheckbox";
+import { useThemeColor } from "./Themed";
 
 type SwipeableContainerType = {
-  todo: any,
-  todos: any,
-  setTodos: any,
-  swipedItemId: any,
-  setSwipedItemId: any,
-}
+  todo: any;
+  // todos: any,
+  // setTodos: any,
+  swipedItemId: any;
+  setSwipedItemId: any;
+};
 
 const SwipeableContainer = ({
   todo,
-  todos,
-  setTodos,
+  // todos,
+  // setTodos,
   swipedItemId,
   setSwipedItemId,
 }: SwipeableContainerType) => {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const [lastTap, setLastTap] = useState(null);
-  const [editItem, setEditItem] = useState(todo.task);
-  const [editItemId, setEditItemId] = useState(null);
   const swipeableRef = useRef(null);
   const inputRef = useRef(null);
+  const { removeHabit } = useHabits();
 
   useEffect(() => {
     if (swipedItemId !== null && swipedItemId !== todo.id) {
@@ -42,27 +48,27 @@ const SwipeableContainer = ({
     }
   });
 
-  const handleDelete = (id: any) => {
-    const updatedTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(updatedTodos);
-  };
-  const toggleCheckbox = (id: any) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    );
-    setTodos(updatedTodos);
-  };
-  const handleEdit = (id: any) => {
-    setEditItemId(null);
-    if (editItem !== "") {
-      const updatedTodos = todos.map((todo) =>
-        todo.id === id ? { ...todo, task: editItem } : todo
-      );
-      setTodos(updatedTodos);
-    } else {
-      setEditItem(todo.task);
-    }
-  };
+  // const handleDelete = (id: any) => {
+  //   const updatedTodos = todos.filter((todo) => todo.id !== id);
+  //   setTodos(updatedTodos);
+  // };
+  // const toggleCheckbox = (id: any) => {
+  //   const updatedTodos = todos.map((todo) =>
+  //     todo.id === id ? { ...todo, completed: !todo.completed } : todo
+  //   );
+  //   setTodos(updatedTodos);
+  // };
+  // const handleEdit = (id: any) => {
+  //   setEditItemId(null);
+  //   if (editItem !== "") {
+  //     const updatedTodos = todos.map((todo) =>
+  //       todo.id === id ? { ...todo, task: editItem } : todo
+  //     );
+  //     setTodos(updatedTodos);
+  //   } else {
+  //     setEditItem(todo.task);
+  //   }
+  // };
   const handleDoubleTap = () => {
     const now = Date.now();
     if (!lastTap) {
@@ -79,12 +85,12 @@ const SwipeableContainer = ({
   };
   const handleSwipeStart = () => {
     if (todo.id !== swipedItemId) setSwipedItemId(todo.id);
-    setIsOpen(true);
+    // setIsOpen(true);
   };
 
   const handleSwipeClose = () => {
     setSwipedItemId(null);
-    setIsOpen(false);
+    // setIsOpen(false);
   };
 
   const renderRightActions = () => {
@@ -92,17 +98,14 @@ const SwipeableContainer = ({
       return null;
     }
     return (
-      <Box
-        flexDirection="row"
-        minWidth={44}
-      >
+      <Box flexDirection="row" minWidth={44}>
         <Button
           zIndex={9999}
           h="$full"
           p="$3"
           bg="$error600"
           borderRadius="$none"
-          onPress={() => handleDelete(todo.id)}
+          onPress={() => removeHabit(todo.id)}
           // focusable={false}
         >
           <AntDesign name="delete" size={21} color="white" />
@@ -128,7 +131,8 @@ const SwipeableContainer = ({
         minWidth={400}
         minHeight={48}
         flexDirection="row"
-        bg={isOpen ? "$backgroundDark700" : "$backgroundDark900"}
+        // bg={isOpen ? "$backgroundDark700" : "$backgroundDark900"}
+        bg="$backgroundWhite900"
         key={todo.id}
         alignItems="center"
         focusable={false}
@@ -136,9 +140,9 @@ const SwipeableContainer = ({
       >
         <Checkbox
           // aria-label={todo.id} // DO NOT USE THIS!!!!!!
-          isChecked={todo.completed}
-          value={todo.task}
-          onChange={() => toggleCheckbox(todo.id)}
+          // isChecked={todo.completed}
+          value={todo.description}
+          // onChange={() => toggleCheckbox(todo.id)}
           size="sm"
           w="$full"
           borderColor="transparent"
@@ -157,14 +161,14 @@ const SwipeableContainer = ({
             }}
             w="$full"
             h="$full"
-            color="$textDark50" 
-            textDecorationLine={todo.completed ? "line-through" : "none"}
+            // color="$textDark50"
+            // textDecorationLine={todo.completed ? "line-through" : "none"}
           >
-            {todo.task}
+            {todo.description}
           </Text>
-          <DifficuityBadge level={todo.id % 3} /> 
+          <DifficuityBadge level={todo.difficulty} />
         </Checkbox>
-           {/* <Input
+        {/* <Input
           //   sx={{
           //     ":focus": {
           //       _web: {
@@ -192,8 +196,8 @@ const SwipeableContainer = ({
           //   //   ref={inputRef}
           //   />
           // </Input> */}
-    </Hoverable>
-  </Swipeable>
+      </Hoverable>
+    </Swipeable>
   );
 };
 export { SwipeableContainer };

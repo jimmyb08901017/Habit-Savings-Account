@@ -1,12 +1,15 @@
 import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
 import { Pressable } from "react-native";
+
 import TabOneScreen from ".";
-import Colors from "@/constants/Colors";
-import { useColorScheme } from "@/components/useColorScheme";
-import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Text } from "@gluestack-ui/themed";
+import { Link, Tabs } from "expo-router";
+
+import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import { useColorScheme } from "@/components/useColorScheme";
+import Colors from "@/constants/Colors";
+import useAccount from "@/hooks/useAccount";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -18,6 +21,7 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { savings, updateSavings } = useAccount();
 
   return (
     <Tabs
@@ -45,7 +49,7 @@ export default function TabLayout() {
             //     )}
             //   </Pressable>
             // </Link>
-            <Text>Your Current Savings: {"\{\}"}</Text>
+            <Text>Your Current Savings: {savings}</Text>
           ),
         }}
       />
@@ -67,7 +71,7 @@ export default function TabLayout() {
             //     )}
             //   </Pressable>
             // </Link>
-            <Text>Your Current Savings: {"\{\}"}</Text>
+            <Text>Your Current Savings: {"{}"}</Text>
           ),
         }}
       />

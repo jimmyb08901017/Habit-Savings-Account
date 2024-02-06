@@ -1,10 +1,11 @@
-import Gradient from "../assets/Icons/Gradient";
 import DocumentData from "../assets/Icons/DocumentData";
+import Gradient from "../assets/Icons/Gradient";
 import LightBulbPerson from "../assets/Icons/LightbulbPerson";
-import Rocket from "../assets/Icons/Rocket";
 import Logo from "../assets/Icons/Logo";
-import EditScreenInfo from "@/components/EditScreenInfo";
+import Rocket from "../assets/Icons/Rocket";
 import { Box, ScrollView, Text } from "@gluestack-ui/themed";
+
+import EditScreenInfo from "@/components/EditScreenInfo";
 
 export default function TabOneScreen() {
   return <Home />;
