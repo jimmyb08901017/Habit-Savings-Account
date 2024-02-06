@@ -14,7 +14,7 @@ import {
 } from "@gluestack-ui/themed";
 import { GlobeIcon } from "@gluestack-ui/themed";
 
-import { useAccountProvider } from "@/context/AccountProvider";
+import { useAccount } from "@/context/AccountProvider";
 import useHabits from "@/hooks/useHabits";
 
 import DifficuityBadge from "./DifficultyBadge";
@@ -38,7 +38,7 @@ const SwipeableContainer = ({
   setSwipedItemId,
 }: SwipeableContainerType) => {
   // const [isOpen, setIsOpen] = useState(false);
-  const { savings, updateSavings } = useAccountProvider();
+  const { savings, updateSavings } = useAccount();
   const [lastTap, setLastTap] = useState(null);
   const swipeableRef = useRef(null);
   const inputRef = useRef(null);
@@ -144,6 +144,7 @@ const SwipeableContainer = ({
           </Checkbox.Indicator> */}
         <Text
           pl="$2"
+          pt="$1"
           sx={{
             ":focus": {
               _web: {

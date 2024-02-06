@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function useAccount() {
+export default function useAccountLocal() {
   const [savings, setSavings] = useState(0);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from "react";
 
-import useAccount from "@/hooks/useAccount";
+import useAccountLocal from "@/hooks/useAccount";
 
 type AccountType = {
   savings: number;
@@ -19,7 +19,7 @@ type SearchStateProviderProps = {
 };
 
 export function AccountProvider({ children }: SearchStateProviderProps) {
-  const { savings, updateSavings } = useAccount();
+  const { savings, updateSavings } = useAccountLocal();
 
   return (
     <Account.Provider value={{ savings, updateSavings }}>
@@ -28,6 +28,6 @@ export function AccountProvider({ children }: SearchStateProviderProps) {
   );
 }
 
-export function useAccountProvider() {
+export function useAccount() {
   return useContext(Account);
 }
