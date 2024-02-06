@@ -18,6 +18,7 @@
     "@gluestack-ui/config": "^1.1.1",
     "@gluestack-ui/themed": "^1.1.0",
     "@hookform/resolvers": "^3.3.4",
+    "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/native": "^6.0.2",
     "@types/react-native-vector-icons": "^6.4.18",
     "expo": "~50.0.3",

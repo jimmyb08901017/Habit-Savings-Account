@@ -2,8 +2,17 @@ import React, { useState, useRef, useEffect } from "react";
 import { Swipeable } from "react-native-gesture-handler";
 import { AntDesign } from '@expo/vector-icons';
 import { Hoverable } from "./Hoverable";
-import { Button, Checkbox, CheckIcon, Box, Text } from "@gluestack-ui/themed";
+import { Button, 
+        Checkbox, 
+        CheckIcon, 
+        Box, 
+        Text, 
+        Badge, 
+        BadgeIcon, 
+        BadgeText } from "@gluestack-ui/themed";
+import { GlobeIcon } from "@gluestack-ui/themed";
 import { MyCheckbox } from "./MyCheckbox";
+import DifficuityBadge from "./DifficultyBadge";
 
 type SwipeableContainerType = {
   todo: any,
@@ -125,7 +134,7 @@ const SwipeableContainer = ({
         focusable={false}
         onPress={handleDoubleTap}
       >
-         <Checkbox
+        <Checkbox
           // aria-label={todo.id} // DO NOT USE THIS!!!!!!
           isChecked={todo.completed}
           value={todo.task}
@@ -133,7 +142,6 @@ const SwipeableContainer = ({
           size="sm"
           w="$full"
           borderColor="transparent"
-          colo
         >
           <Checkbox.Indicator>
             <Checkbox.Icon color="$backgroundDark900" as={CheckIcon} />
@@ -154,7 +162,8 @@ const SwipeableContainer = ({
           >
             {todo.task}
           </Text>
-          </Checkbox>
+          <DifficuityBadge level={todo.id % 3} /> 
+        </Checkbox>
            {/* <Input
           //   sx={{
           //     ":focus": {
@@ -183,8 +192,8 @@ const SwipeableContainer = ({
           //   //   ref={inputRef}
           //   />
           // </Input> */}
-       </Hoverable>
-    </Swipeable>
+    </Hoverable>
+  </Swipeable>
   );
 };
 export { SwipeableContainer };
