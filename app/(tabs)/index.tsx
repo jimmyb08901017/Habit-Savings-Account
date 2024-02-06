@@ -30,12 +30,10 @@ import {
   SelectDragIndicatorWrapper,
   SelectBackdrop,
 } from "@gluestack-ui/themed";
-import { Link } from "expo-router";
 
 import { StyledGestureHandlerRootView } from "@/components/StyledGestureHandlerRootView";
 import { SwipeableContainer } from "@/components/SwipeableContainer";
 import useHabits from "@/hooks/useHabits";
-import { defaultTodos } from "@/utils";
 import type { nativeHabit, Habit } from "@/utils/types";
 
 export default function TabOneScreen() {

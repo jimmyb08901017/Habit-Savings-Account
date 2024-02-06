@@ -9,7 +9,7 @@ import { Link, Tabs } from "expo-router";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
-import useAccount from "@/hooks/useAccount";
+import { useAccountProvider } from "@/context/AccountProvider";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -21,7 +21,7 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const { savings, updateSavings } = useAccount();
+  const { savings } = useAccountProvider();
 
   return (
     <Tabs

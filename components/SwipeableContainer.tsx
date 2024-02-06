@@ -14,6 +14,7 @@ import {
 } from "@gluestack-ui/themed";
 import { GlobeIcon } from "@gluestack-ui/themed";
 
+import { useAccountProvider } from "@/context/AccountProvider";
 import useHabits from "@/hooks/useHabits";
 
 import DifficuityBadge from "./DifficultyBadge";
@@ -37,6 +38,7 @@ const SwipeableContainer = ({
   setSwipedItemId,
 }: SwipeableContainerType) => {
   // const [isOpen, setIsOpen] = useState(false);
+  const { savings, updateSavings } = useAccountProvider();
   const [lastTap, setLastTap] = useState(null);
   const swipeableRef = useRef(null);
   const inputRef = useRef(null);
@@ -69,20 +71,10 @@ const SwipeableContainer = ({
   //     setEditItem(todo.task);
   //   }
   // };
-  const handleDoubleTap = () => {
-    const now = Date.now();
-    if (!lastTap) {
-      setLastTap(now);
-    } else {
-      if (now - lastTap < 700) {
-        setEditItemId(todo.id);
-        setTimeout(() => {
-          inputRef?.current?.focus();
-        }, 100);
-      }
-      setLastTap(null);
-    }
+  const handleComplete = (habitId: string) => {
+    updateSavings(savings + 5);
   };
+
   const handleSwipeStart = () => {
     if (todo.id !== swipedItemId) setSwipedItemId(todo.id);
     // setIsOpen(true);
@@ -136,9 +128,9 @@ const SwipeableContainer = ({
         key={todo.id}
         alignItems="center"
         focusable={false}
-        onPress={handleDoubleTap}
+        onPress={() => handleComplete(todo.id)}
       >
-        <Checkbox
+        {/* <Checkbox
           // aria-label={todo.id} // DO NOT USE THIS!!!!!!
           // isChecked={todo.completed}
           value={todo.description}
@@ -149,25 +141,25 @@ const SwipeableContainer = ({
         >
           <Checkbox.Indicator>
             <Checkbox.Icon color="$backgroundDark900" as={CheckIcon} />
-          </Checkbox.Indicator>
-          <Text
-            pl="$2"
-            sx={{
-              ":focus": {
-                _web: {
-                  boxShadow: "none",
-                },
+          </Checkbox.Indicator> */}
+        <Text
+          pl="$2"
+          sx={{
+            ":focus": {
+              _web: {
+                boxShadow: "none",
               },
-            }}
-            w="$full"
-            h="$full"
-            // color="$textDark50"
-            // textDecorationLine={todo.completed ? "line-through" : "none"}
-          >
-            {todo.description}
-          </Text>
-          <DifficuityBadge level={todo.difficulty} />
-        </Checkbox>
+            },
+          }}
+          w="$full"
+          h="$full"
+          // color="$textDark50"
+          // textDecorationLine={todo.completed ? "line-through" : "none"}
+        >
+          {todo.description}
+        </Text>
+        <DifficuityBadge level={todo.difficulty} />
+        {/* </Checkbox> */}
         {/* <Input
           //   sx={{
           //     ":focus": {

@@ -1,3 +1,8 @@
+/**
+ * [Important] This hook 'useAccount' is deprecated!
+ * You should use 'useAccountProvider' instead, which is the
+ * context version of useAccount.
+ */
 import { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";

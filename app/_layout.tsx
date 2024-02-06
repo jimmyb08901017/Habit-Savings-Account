@@ -13,6 +13,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 
 import { useColorScheme } from "@/components/useColorScheme";
+import { AccountProvider } from "@/context/AccountProvider";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -57,11 +58,13 @@ function RootLayoutNav() {
   return (
     <GluestackUIProvider config={config}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack initialRouteName="(tabs)">
-          <Stack.Screen name="gluestack" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
+        <AccountProvider>
+          <Stack initialRouteName="(tabs)">
+            <Stack.Screen name="gluestack" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          </Stack>
+        </AccountProvider>
       </ThemeProvider>
     </GluestackUIProvider>
   );

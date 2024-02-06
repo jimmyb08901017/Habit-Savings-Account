@@ -13,7 +13,7 @@ const Hoverable = ({ children, ...props }: any) => {
       onHoverOut={() => setHover(false)}
       sx={{
         ":hover": {
-          bg: "$backgroundDark700",
+          bg: "$backgroundDark300",
         },
       }}
       {...props}
