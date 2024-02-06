@@ -2,6 +2,13 @@
 
 This app is created using expo(React-Native), expo-router and Typescript.
 
+There are five main data structures:
+**Account** act as bank,
+**Habit** for daily habit,
+**SpecialIncome** for non-daily income,
+**Product** for purchases,
+**TransactionRecord** for Account records.
+
 ## calendar
 
 https://github.com/wix/react-native-calendars
