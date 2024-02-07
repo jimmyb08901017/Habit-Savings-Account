@@ -5,8 +5,6 @@ import Logo from "../assets/Icons/Logo";
 import Rocket from "../assets/Icons/Rocket";
 import { Box, ScrollView, Text } from "@gluestack-ui/themed";
 
-import EditScreenInfo from "@/components/EditScreenInfo";
-
 export default function TabOneScreen() {
   return <Home />;
 }
