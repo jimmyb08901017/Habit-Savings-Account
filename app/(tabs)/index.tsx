@@ -1,58 +1,202 @@
-import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { useState } from "react";
+import { StyleSheet } from "react-native";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
-import { useState } from 'react';
+// import { Text, View } from "@/components/Themed";
+import { Text, View, Icon } from "@gluestack-ui/themed";
+import { Button, ButtonIcon, ButtonText, Divider } from "@gluestack-ui/themed";
+import {
+  Modal,
+  ModalBody,
+  ModalBackdrop,
+  ModalContent,
+} from "@gluestack-ui/themed";
+import {
+  FormControl,
+  FormControlLabel,
+  FormControlLabelText,
+} from "@gluestack-ui/themed";
+import { Input, InputField } from "@gluestack-ui/themed";
+import { VStack, Heading } from "@gluestack-ui/themed";
+import { AddIcon, ChevronDownIcon } from "@gluestack-ui/themed";
+import {
+  Select,
+  SelectTrigger,
+  SelectInput,
+  SelectIcon,
+  SelectPortal,
+  SelectDragIndicator,
+  SelectItem,
+  SelectContent,
+  SelectDragIndicatorWrapper,
+  SelectBackdrop,
+} from "@gluestack-ui/themed";
 
-type GoalType = {
-  name: string,
-  value: number,
-}
+import { StyledGestureHandlerRootView } from "@/components/StyledGestureHandlerRootView";
+import { SwipeableContainer } from "@/components/SwipeableContainer";
+import useHabits from "@/hooks/useHabits";
+import type { nativeHabit, Habit } from "@/utils/types";
 
-type ActivityType = {
-  name: string,
-  value: number,
-}
+export default function TabOneScreen() {
+  const { habits, addHabit } = useHabits();
+  const [swipedItemId, setSwipedItemId] = useState(null);
 
-const Goals : GoalType[] = [
-  {name: "Keyboard", value: 1000},
-]
+  // For Add habits
+  const [showModal, setShowModal] = useState(false);
+  const [name, setName] = useState("Reading");
+  const [description, setDescription] = useState("Read a page");
+  const [difficulty, setDifficulty] = useState("0");
+  const addHabitButtonAction = async () => {
+    const newHabit: nativeHabit = {
+      name: name,
+      description: description,
+      difficulty: difficulty,
+      money: 5,
+    };
+    await addHabit(newHabit);
+    console.log(habits);
+    setShowModal(false);
+  };
 
-const Activities : ActivityType[] = [
-  {name: "Reading", value: 10},
-  {name: "Exercise", value: 10},
-]
-
-export default function RecordScreen() {
-  const [currentMoney, setCurrentMoney] = useState(0);
-  const [activeActivityType, setActiveActivitytype] = useState("Reading");
+  // For Daily Check
+  const today = new Date();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.goal}>Goal: {Goals[0].name} ({Goals[0].value}$)</Text>
-      <Text style={styles.currentMoney}>Current Money: {currentMoney}</Text>
-      <Text style={styles.progressBar}>Progress: {currentMoney/Goals[0].value * 100}% ({currentMoney} / {Goals[0].value})</Text> 
-      <FlatList
-      data={Activities}
-      renderItem={({ item, index }) => (
-        <TouchableOpacity
-        // style={styles.items}
-        key={index}
-        onPress={()=>{
-          setActiveActivitytype(item.name);
-          setCurrentMoney(currentMoney + item.value);
+      <View style={styles.header}>
+        <Text style={styles.title}>
+          Habits for {today.toLocaleDateString()}
+        </Text>
+        <View style={styles.title}>
+          <Button
+            size="md"
+            borderColor="$backgroundLight300"
+            $dark-borderColor="$backgroundDark700"
+            variant="outline"
+            action="primary"
+            isDisabled={false}
+            isFocusVisible={false}
+            onPress={() => setShowModal(true)}
+          >
+            <ButtonText color="$textLight300" $dark-color="$textDark300">
+              Add
+            </ButtonText>
+            <ButtonIcon
+              color="$textLight300"
+              $dark-color="$textDark300"
+              as={AddIcon}
+            />
+          </Button>
+        </View>
+      </View>
+      {/* <View
+        style={styles.separator}
+        lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      /> */}
+      <Divider my="$0.5" />
+      {/* <EditScreenInfo path="app/(tabs)/index.tsx" /> */}
+      {/* <Hoverable 
+        px="$6"
+        py="$2"
+        minHeight={70}
+        flexDirection="row"
+      /> */}
+      {/** Habit Region */}
+      <View>
+        <Text>Habits: {habits.length}</Text>
+      </View>
+      <View>
+        {/* {habits.map((habit, index)=>{
+          <Text>habit:</Text>
+        })} */}
+      </View>
+      <StyledGestureHandlerRootView style={{ flex: 1 }}>
+        {habits.map((habit: Habit, index: number) => (
+          <SwipeableContainer
+            key={index}
+            todo={habit}
+            // todos={habits}
+            // setTodos={setHabits}
+            swipedItemId={swipedItemId}
+            setSwipedItemId={setSwipedItemId}
+          />
+        ))}
+      </StyledGestureHandlerRootView>
+      {/** Modal for adding habit */}
+      <Modal
+        isOpen={showModal}
+        onClose={() => {
+          setShowModal(false);
+          // addHabit();
         }}
-        >
-          <View>
-          <Text>{item.name}: {item.value}$</Text>
-          </View>
-        </TouchableOpacity>
-      )}
-      contentContainerStyle={{ columnGap: 3 }}
-      />
-
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      >
+        <ModalBackdrop />
+        <ModalContent maxWidth="$96">
+          <ModalBody p="$5">
+            <VStack space="xs" mb="$4">
+              <Heading>Add Your Habit</Heading>
+              <Text size="sm">Habits can fulfill your potentials.</Text>
+            </VStack>
+            <VStack py="$2" space="xl">
+              <FormControl>
+                <FormControlLabel>
+                  <FormControlLabelText>Name</FormControlLabelText>
+                </FormControlLabel>
+                <Input>
+                  <InputField value={name} onChangeText={(t) => setName(t)} />
+                </Input>
+              </FormControl>
+              <FormControl>
+                <FormControlLabel>
+                  <FormControlLabelText>description</FormControlLabelText>
+                </FormControlLabel>
+                <Input>
+                  <InputField
+                    value={description}
+                    onChangeText={(t) => setDescription(t)}
+                  />
+                </Input>
+              </FormControl>
+              <FormControl>
+                <FormControlLabel>
+                  <FormControlLabelText>Difficulty</FormControlLabelText>
+                </FormControlLabel>
+                <Select
+                  onValueChange={(v) => {
+                    setDifficulty(v);
+                  }}
+                >
+                  <SelectTrigger variant="underlined" size="md">
+                    <SelectInput placeholder="Select option" />
+                    <SelectIcon>
+                      <Icon as={ChevronDownIcon} />
+                    </SelectIcon>
+                  </SelectTrigger>
+                  <SelectPortal>
+                    <SelectBackdrop />
+                    <SelectContent>
+                      <SelectDragIndicatorWrapper>
+                        <SelectDragIndicator />
+                      </SelectDragIndicatorWrapper>
+                      <SelectItem label="Easy" value="0" />
+                      <SelectItem label="Medium" value="1" />
+                      <SelectItem label="Hard" value="2" />
+                    </SelectContent>
+                  </SelectPortal>
+                </Select>
+              </FormControl>
+            </VStack>
+            <Button
+              mt="$4"
+              onPress={() => {
+                addHabitButtonAction();
+              }}
+            >
+              <ButtonText>Add Habit</ButtonText>
+            </Button>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </View>
   );
 }
@@ -60,28 +204,25 @@ export default function RecordScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
-  goal: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  header: {
+    width: "95%",
+    flex: 0,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
   },
-  currentMoney: {
+  title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+    textAlign: "left",
+    padding: 8,
   },
-  progressBar: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },  
-  items: {
-    fontSize: 20,
-    
-  },  
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
 });

@@ -1,15 +1,19 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import React from "react";
+import { Pressable } from "react-native";
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import TabOneScreen from ".";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Text } from "@gluestack-ui/themed";
+import { Link, Tabs } from "expo-router";
+
+import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import { useColorScheme } from "@/components/useColorScheme";
+import Colors from "@/constants/Colors";
+import { useAccount } from "@/context/AccountProvider";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
@@ -17,41 +21,58 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { savings } = useAccount();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Record Activities',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Income",
           headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+            // <Link href="/modal" asChild>
+            //   <Pressable>
+            //     {({ pressed }) => (
+            //       <FontAwesome
+            //         name="info-circle"
+            //         size={25}
+            //         color={Colors[colorScheme ?? "light"].text}
+            //         style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            //       />
+            //     )}
+            //   </Pressable>
+            // </Link>
+            <Text>Your Current Savings: {savings}$</Text>
           ),
         }}
       />
       <Tabs.Screen
-        name="statistics"
+        name="two"
         options={{
-          title: 'Statistic',
+          title: "Shop",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerRight: () => (
+            // <Link href="/modal" asChild>
+            //   <Pressable>
+            //     {({ pressed }) => (
+            //       <FontAwesome
+            //         name="info-circle"
+            //         size={25}
+            //         color={Colors[colorScheme ?? "light"].text}
+            //         style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            //       />
+            //     )}
+            //   </Pressable>
+            // </Link>
+            <Text>Your Current Savings: {savings}$</Text>
+          ),
         }}
       />
     </Tabs>
