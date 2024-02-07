@@ -23,3 +23,4 @@ export type TransactionRecord = {
 export type nativeTransactionRecord = Omit<TransactionRecord, "id">;
 
 export type Product = Omit<Habit, "difficulty" | "isChecked">;
+export type nativeProduct = Omit<Product, "id">;

@@ -88,13 +88,7 @@ export default function TabOneScreen() {
           </Button>
         </View>
       </View>
-      {/* <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      /> */}
       <Divider my="$0.5" />
-      {/* <EditScreenInfo path="app/(tabs)/index.tsx" /> */}
       {/* <Hoverable 
         px="$6"
         py="$2"
