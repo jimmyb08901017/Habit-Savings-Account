@@ -1,18 +1,19 @@
+import React, { useContext, createContext } from "react";
+
 import useTransRecords from "@/hooks/useTransRecords";
 import type { TransactionRecord, nativeTransactionRecord } from "@/utils/types";
-import React, { useContext, createContext } from "react";
 
 type TransRecordType = {
   records: TransactionRecord[];
-  addRecord: (r: nativeTransactionRecord)=>void;
-  removeRecord: (id: string)=>void;
+  addRecord: (r: nativeTransactionRecord) => void;
+  removeRecord: (id: string) => void;
 };
 
 const defaultRecord: TransRecordType = {
   records: [],
-  addRecord: ()=>{},
-  removeRecord: ()=>{},
-}
+  addRecord: () => {},
+  removeRecord: () => {},
+};
 
 const Records = createContext<TransRecordType>(defaultRecord);
 
@@ -20,7 +21,9 @@ type SearchStateProviderProps = {
   children: React.ReactNode;
 };
 
-export function TransactionRecordsProvider({ children }: SearchStateProviderProps) {
+export function TransactionRecordsProvider({
+  children,
+}: SearchStateProviderProps) {
   const { records, addRecord, removeRecord } = useTransRecords();
 
   return (
