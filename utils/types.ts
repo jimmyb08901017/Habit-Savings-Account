@@ -20,5 +20,6 @@ export type TransactionRecord = {
   date: Date;
   activity: recordHabit | Product;
 };
+export type nativeTransactionRecord = Omit<TransactionRecord, "id">;
 
 export type Product = Omit<Habit, "difficulty" | "isChecked">;
