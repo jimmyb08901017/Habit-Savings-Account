@@ -2,6 +2,7 @@ import React from "react";
 import { Pressable } from "react-native";
 
 import TabOneScreen from ".";
+import { AntDesign } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Text } from "@gluestack-ui/themed";
 import { Link, Tabs } from "expo-router";
@@ -36,6 +37,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Income",
+          tabBarIcon: ({color})=> <AntDesign size={28} name="table" color={color} />,
           headerRight: () => (
             // <Link href="/modal" asChild>
             //   <Pressable>
@@ -54,10 +56,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="shop"
         options={{
           title: "Shop",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign size={28} name="bank" color={color} />,
           headerRight: () => (
             // <Link href="/modal" asChild>
             //   <Pressable>
