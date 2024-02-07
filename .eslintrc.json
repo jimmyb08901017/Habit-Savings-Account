@@ -25,7 +25,7 @@
     "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off",
     "react/function-component-definition": [
-      "warn",
+      "off",
       {
         "namedComponents": "function-declaration",
         "unnamedComponents": "arrow-function"
